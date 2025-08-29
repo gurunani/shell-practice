@@ -1,3 +1,3 @@
 #!/bin/bash
 
-echo "12"
+echo "1 million"
