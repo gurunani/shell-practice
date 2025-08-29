@@ -1,8 +1,11 @@
 #!/bin/bash
 
-echo "AI :: Hi guru , how are you ?"
-echo "Guru :: I am fine , how are you ?"
-echo "AI :: I am fine too , what are you doing ?"
-echo "Guru :: I am learning shell scripting."
-echo "AI :: That's great , keep learning and keep growing."
-echo "Guru :: Thank you AI , bye !"
+person1="Varun"
+person2="Ravali"
+
+echo "$person1 :: Hi $person2 , how are you ?"
+echo "$person2 :: I am fine , how are you ?"
+echo "$person1 :: I am fine too , what are you doing ?"
+echo "$person2 :: I am learning shell scripting."
+echo "$person1 :: That's great , keep learning and keep growing."
+echo "$person2 :: Thank you $person1 , bye !"
