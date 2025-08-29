@@ -2,4 +2,4 @@
 
 TIMESTAMP=$(date)
 
-echo "  file excuted on : $timestamp"
+echo "  file excuted on : $TIMESTAMP"
