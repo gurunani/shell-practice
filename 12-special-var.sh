@@ -8,4 +8,4 @@ echo "home directory : $HOME"
 echo "user name : $USER"
 echo "process ID : $$"
 sleep 5 &
-echo " process id in back ground : $!
+echo " process id in back ground : $!"
