@@ -20,3 +20,5 @@ else
     echo "mysql installing failed"
     exit 1
 fi
+
+echo " is exit code working"
