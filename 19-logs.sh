@@ -12,22 +12,22 @@ LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
 
 mkdir -p $LOGS_FOLDER
 
-echo "script started executing at : $(date)" &>>$LOG_FILE
+echo "script started executing at : $(date)" | tee -a $LOG_FILE
 
 if [ $USERID -ne 0 ]
 then
-    echo -e "$R please run with root access"  &>>$LOG_FILE
+    echo -e "$R please run with root access"  | tee -a $LOG_FILE
     exit 1
 else
-    echo -e "$G you are running with root access $N"  &>>$LOG_FILE
+    echo -e "$G you are running with root access $N"  | tee -a $LOG_FILE
 fi
 
 VALIDATE(){
 if [ $1 -eq 0 ]
     then 
-        echo -e "$G installing $2 is successful $N "  &>>$LOG_FILE
+        echo -e "$G installing $2 is successful $N "  | tee -a $LOG_FILE
     else
-        echo -e "$R installing $2 is unsuccessful $N"  &>>$LOG_FILE
+        echo -e "$R installing $2 is unsuccessful $N"  | tee -a $LOG_FILE
         exit 1
     fi
 }
@@ -35,9 +35,9 @@ dnf list installed mysql
 
 if [ $? -eq 0 ]
 then 
-    echo -e "$Y mysql successfully installed $N"  &>>$LOG_FILE
+    echo -e "$Y mysql successfully installed $N"  | tee -a $LOG_FILE
 else
-    echo -e "$Y mysql is not installed, going to install now $N"  &>>$LOG_FILE
+    echo -e "$Y mysql is not installed, going to install now $N"  | tee -a $LOG_FILE
     dnf install mysql -y
     VALIDATE $? "mysql"
   
