@@ -10,21 +10,21 @@ else
     echo "you are running with root access"
 fi
 
-dnf list installed mysql 
+dnf list installed python3 
 
 if [ $? -eq 0 ]
 then 
-    echo "mysql successfully installed"
+    echo "python3 successfully installed"
     exit 0
 else
-    echo "mysql is not installed, going to install now"
-    dnf install mysql -y
+    echo "python3 is not installed, going to install now"
+    dnf install python3 -y
     if [ $? -eq 0 ]
     then 
-        echo "installing mysql is successful "
+        echo "installing python3 is successful "
         exit 0
     else
-        echo "installing mysql is unsuccessful"
+        echo "installing python3 is unsuccessful"
         exit 1
     fi
 fi
