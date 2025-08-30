@@ -10,7 +10,7 @@ then
     echo -e "$R please run with root access"
     exit 1
 else
-    echo  "$G you are running with root access $N"
+    echo -e "$G you are running with root access $N"
 fi
 # $? → will be 0 if the install succeeded.
 
@@ -36,9 +36,9 @@ fi
 VALIDATE(){
 if [ $1 -eq 0 ]
     then 
-        echo "$G installing $2 is successful $N "
+        echo -e "$G installing $2 is successful $N "
     else
-        echo "$R installing $2 is unsuccessful $N"
+        echo -e "$R installing $2 is unsuccessful $N"
         exit 1
     fi
 }
@@ -46,9 +46,9 @@ dnf list installed mysql
 
 if [ $? -eq 0 ]
 then 
-    echo "$Y mysql successfully installed $N"
+    echo -e "$Y mysql successfully installed $N"
 else
-    echo "$Y mysql is not installed, going to install now $N"
+    echo -e "$Y mysql is not installed, going to install now $N"
     dnf install mysql -y
     VALIDATE $? "mysql"
   
