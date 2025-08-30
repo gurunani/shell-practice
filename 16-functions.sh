@@ -9,6 +9,27 @@ then
 else
     echo "you are running with root access"
 fi
+# $? → will be 0 if the install succeeded.
+
+# "mysql" → is the string you passed.
+
+# Inside VALIDATE function:
+
+# $1 = 0
+
+# $2 = mysql
+
+# Then the function checks:
+
+# If $1 -eq 0 → prints "installing mysql is successful"
+
+# Else → prints "installing mysql is unsuccessful"
+
+# ✅ So basically:
+
+# $1 = result of the command (success/failure).
+
+# $2 = name of the software you’re checking.
 VALIDATE(){
 if [ $1 -eq 0 ]
     then 
