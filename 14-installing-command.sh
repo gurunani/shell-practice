@@ -1,12 +1,12 @@
 #!/bin/bash
 
-$USERID=$(id - u)
+$USERID=$(id -u)
 
-if [ $USERID -ne 0]
+if [ $USERID -ne 0 ]
 then
     echo "please run with root acess"
-    exit (1)
+    echo exit 1
 else
     echo "you are running with root acess"
-    exit(0)
+    exit 0
 fi
