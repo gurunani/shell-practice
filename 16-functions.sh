@@ -13,7 +13,6 @@ VALIDATE(){}
 if [ $1 -eq 0 ]
     then 
         echo "installing $2 is successful "
-        exit 0
     else
         echo "installing $2 is unsuccessful"
         exit 1
@@ -27,6 +26,7 @@ then
 else
     echo "mysql is not installed, going to install now"
     dnf install mysql -y
+    VALIDATE $? "mysql"
   
 fi
 
@@ -38,7 +38,7 @@ then
 else
     echo "nginx is not installed, going to install now"
     dnf install nginx -y
-  
+    VALIDATE $? "nginx"
 fi
 
 dnf list installed python3 
@@ -49,6 +49,6 @@ then
 else
     echo "python3 is not installed, going to install now"
     dnf install python3 -y
+    VALIDATE $? "python3"
     
 fi
-echo " hello "
