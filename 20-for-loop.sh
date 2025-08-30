@@ -2,5 +2,5 @@
 
 for i in $(seq 1 100)
 do 
-    echo $1
+    echo -e "\e[31m $1 "
 done
