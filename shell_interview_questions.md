@@ -1,411 +1,428 @@
-Absolutely! Here’s a fully **ready-to-paste Markdown version** of your 50 shell scripting interview questions with answers and code blocks. You can copy this directly into a file like `shell_interview_questions.md` and push it to GitHub.
+Got it! You want a **Markdown file of real-life shell scripting interview questions** that are **practical and commonly asked in real scenarios**, not just theory. Here’s a ready-to-use `.md` version you can directly push to GitHub:
 
 ---
 
 ````markdown
-# 50 Important Shell Scripting Interview Questions and Answers
+# Real-Life Shell Scripting Interview Questions and Answers
 
 ---
 
-## **1–10: Basics**
-
-**1. What is a shell script?**  
-A shell script is a text file containing shell commands executed sequentially.
-
-**2. How do you make a script executable?**  
+## **1. How do you check if a process is running and restart it if it’s not?**
 ```bash
-chmod +x script.sh
-./script.sh
+if ! pgrep nginx > /dev/null; then
+    systemctl start nginx
+    echo "Nginx restarted"
+fi
 ````
 
-**3. What is the difference between `sh` and `bash`?**
+---
 
-* `sh` is the original Bourne shell.
-* `bash` (Bourne Again Shell) has more features like arrays, arithmetic, and functions.
-
-**4. How do you pass arguments to a script?**
+## **2. How to find large files taking up space?**
 
 ```bash
-#!/bin/bash
-echo "First argument: $1"
-echo "Second argument: $2"
+find / -type f -size +100M -exec ls -lh {} \;
 ```
 
-**5. How to check if a file exists in shell?**
+---
+
+## **3. How do you monitor disk usage and alert if >80%?**
 
 ```bash
-if [ -f "file.txt" ]; then
-    echo "File exists"
-fi
-```
-
-**6. How to check if a directory exists?**
-
-```bash
-if [ -d "/tmp" ]; then
-    echo "Directory exists"
-fi
-```
-
-**7. How to get current date in shell?**
-
-```bash
-date +"%Y-%m-%d %H:%M:%S"
-```
-
-**8. How to read user input?**
-
-```bash
-read -p "Enter your name: " name
-echo "Hello $name"
-```
-
-**9. How to find length of a string?**
-
-```bash
-str="Hello"
-echo ${#str}   # Output: 5
-```
-
-**10. How to check if a variable is empty?**
-
-```bash
-if [ -z "$var" ]; then
-  echo "Variable is empty"
+usage=$(df / | awk 'NR==2 {print $5}' | sed 's/%//')
+if [ $usage -gt 80 ]; then
+    echo "Disk usage is above 80%"
 fi
 ```
 
 ---
 
-## **11–20: Loops & Conditional**
-
-**11. For loop example**
+## **4. How do you take a backup of a directory with timestamp?**
 
 ```bash
-for i in {1..5}; do
-  echo "Number $i"
-done
-```
-
-**12. While loop example**
-
-```bash
-count=1
-while [ $count -le 5 ]; do
-  echo $count
-  ((count++))
-done
-```
-
-**13. Until loop example**
-
-```bash
-count=1
-until [ $count -gt 5 ]; do
-  echo $count
-  ((count++))
-done
-```
-
-**14. If-else example**
-
-```bash
-num=10
-if [ $num -gt 5 ]; then
-    echo "Greater than 5"
-else
-    echo "Less or equal 5"
-fi
-```
-
-**15. Nested if example**
-
-```bash
-num=10
-if [ $num -gt 0 ]; then
-    if [ $num -lt 20 ]; then
-        echo "Between 1 and 19"
-    fi
-fi
-```
-
-**16. Case statement example**
-
-```bash
-read -p "Enter a color: " color
-case $color in
-    red) echo "Apple";;
-    green) echo "Leaf";;
-    *) echo "Unknown color";;
-esac
-```
-
-**17. Break in loops**
-
-```bash
-for i in {1..5}; do
-  if [ $i -eq 3 ]; then
-    break
-  fi
-  echo $i
-done
-```
-
-**18. Continue in loops**
-
-```bash
-for i in {1..5}; do
-  if [ $i -eq 3 ]; then
-    continue
-  fi
-  echo $i
-done
-```
-
-**19. Using arithmetic in shell**
-
-```bash
-a=5
-b=3
-echo $((a + b))
-```
-
-**20. Using `expr` for arithmetic**
-
-```bash
-a=5
-b=3
-expr $a + $b
+tar -czf /backup/dir_$(date +%F).tar.gz /var/www/html
 ```
 
 ---
 
-## **21–30: Functions & Arrays**
-
-**21. How to define a function**
+## **5. How do you check last login of users?**
 
 ```bash
-myfunc() {
-  echo "Hello Function"
-}
-myfunc
-```
-
-**22. Function with arguments**
-
-```bash
-greet() {
-  echo "Hello $1"
-}
-greet "Guru"
-```
-
-**23. Return value from function**
-
-```bash
-add() {
-  return $(($1 + $2))
-}
-add 2 3
-echo $?   # Output: 5
-```
-
-**24. Array declaration**
-
-```bash
-arr=(1 2 3 4 5)
-echo ${arr[0]}   # Output: 1
-```
-
-**25. Array length**
-
-```bash
-echo ${#arr[@]}   # Output: 5
-```
-
-**26. Loop through array**
-
-```bash
-for i in "${arr[@]}"; do
-  echo $i
-done
-```
-
-**27. Associative array**
-
-```bash
-declare -A fruits
-fruits[apple]="red"
-fruits[banana]="yellow"
-echo ${fruits[apple]}
-```
-
-**28. Check if element exists in array**
-
-```bash
-if [[ " ${arr[@]} " =~ " 3 " ]]; then
-  echo "Exists"
-fi
-```
-
-**29. Print array indices**
-
-```bash
-echo ${!arr[@]}
-```
-
-**30. Add element to array**
-
-```bash
-arr+=(6)
+last | head -n 5
 ```
 
 ---
 
-## **31–40: Files & Strings**
-
-**31. Read file line by line**
+## **6. How to find the top 5 memory-consuming processes?**
 
 ```bash
-while IFS= read -r line; do
-  echo $line
-done < file.txt
-```
-
-**32. Count lines in file**
-
-```bash
-wc -l file.txt
-```
-
-**33. Search string in file**
-
-```bash
-grep "search_text" file.txt
-```
-
-**34. Replace string in file (inline)**
-
-```bash
-sed -i 's/old/new/g' file.txt
-```
-
-**35. Print first 5 lines**
-
-```bash
-head -n 5 file.txt
-```
-
-**36. Print last 5 lines**
-
-```bash
-tail -n 5 file.txt
-```
-
-**37. String slicing**
-
-```bash
-str="HelloWorld"
-echo ${str:0:5}   # Output: Hello
-```
-
-**38. Convert string to uppercase/lowercase**
-
-```bash
-str="hello"
-echo ${str^^}  # HELLO
-echo ${str,,}  # hello
-```
-
-**39. Concatenate strings**
-
-```bash
-a="Hello"
-b="World"
-echo "$a $b"
-```
-
-**40. Find word count in file**
-
-```bash
-wc -w file.txt
+ps aux --sort=-%mem | head -n 6
 ```
 
 ---
 
-## **41–50: Real-Time / Practical**
-
-**41. Check if process is running**
+## **7. How to search for a specific error in log files?**
 
 ```bash
-if pgrep nginx > /dev/null; then
-  echo "Running"
-else
-  echo "Not running"
+grep -i "error" /var/log/nginx/error.log
+```
+
+---
+
+## **8. How to monitor CPU usage and alert if >90%?**
+
+```bash
+cpu=$(top -bn1 | grep "Cpu(s)" | awk '{print $2+$4}')
+if (( $(echo "$cpu > 90" | bc -l) )); then
+    echo "CPU usage above 90%"
 fi
 ```
 
-**42. Kill a process by name**
+---
+
+## **9. How to check if a service is enabled and running?**
 
 ```bash
-pkill nginx
+systemctl is-enabled nginx
+systemctl status nginx
 ```
 
-**43. Disk usage of directory**
+---
+
+## **10. How to delete files older than 30 days in a directory?**
 
 ```bash
-du -sh /var/log
+find /var/log/nginx/ -type f -mtime +30 -exec rm -f {} \;
 ```
 
-**44. Check available disk space**
+---
+
+## **11. How to compare two files line by line?**
+
+```bash
+diff file1.txt file2.txt
+```
+
+---
+
+## **12. How to count number of lines, words, and characters in a file?**
+
+```bash
+wc file.txt
+```
+
+---
+
+## **13. How to check if a port is in use?**
+
+```bash
+netstat -tuln | grep 80
+```
+
+---
+
+## **14. How to send email from shell script (Linux)?**
+
+```bash
+echo "Backup completed" | mail -s "Backup Status" admin@example.com
+```
+
+---
+
+## **15. How to run a command every hour using cron?**
+
+```bash
+# Edit crontab
+crontab -e
+# Add the line
+0 * * * * /home/user/script.sh
+```
+
+---
+
+## **16. How to check disk space of all mounted partitions?**
 
 ```bash
 df -h
 ```
 
-**45. Backup file with date**
+---
+
+## **17. How to append timestamped logs to a file?**
 
 ```bash
-cp file.txt file_$(date +%F).bak
+echo "$(date +%F_%T) - Task completed" >> /var/log/task.log
 ```
 
-**46. Cron job example**
+---
+
+## **18. How to extract specific columns from a CSV file?**
 
 ```bash
-# Run script.sh every day at 2 AM
-0 2 * * * /home/user/script.sh
+awk -F',' '{print $1,$3}' file.csv
 ```
 
-**47. Redirect output to file**
+---
+
+## **19. How to replace a string in multiple files recursively?**
 
 ```bash
-echo "Hello" > output.txt   # overwrite
-echo "World" >> output.txt  # append
+find /var/www/html -type f -exec sed -i 's/old/new/g' {} \;
 ```
 
-**48. Pipe and filter example**
+---
+
+## **20. How to check system uptime?**
 
 ```bash
-ps aux | grep nginx
+uptime
 ```
 
-**49. Check last logged in users**
+---
+
+## **21. How to check number of files in a directory?**
+
+```bash
+ls -1 /var/log | wc -l
+```
+
+---
+
+## **22. How to monitor a directory for new files?**
+
+```bash
+inotifywait -m /var/log
+```
+
+---
+
+## **23. How to find all symbolic links in a directory?**
+
+```bash
+find /home/user -type l
+```
+
+---
+
+## **24. How to sort a file numerically or alphabetically?**
+
+```bash
+sort -n numbers.txt   # numeric
+sort names.txt        # alphabetic
+```
+
+---
+
+## **25. How to extract lines between two patterns in a file?**
+
+```bash
+sed -n '/START/,/END/p' file.txt
+```
+
+---
+
+## **26. How to check free memory?**
+
+```bash
+free -h
+```
+
+---
+
+## **27. How to kill a process by PID or name?**
+
+```bash
+kill 1234          # by PID
+pkill nginx        # by name
+```
+
+---
+
+## **28. How to schedule a one-time job in Linux?**
+
+```bash
+at 23:00
+# Inside prompt
+/home/user/script.sh
+Ctrl+D
+```
+
+---
+
+## **29. How to check environmental variables?**
+
+```bash
+printenv
+```
+
+---
+
+## **30. How to archive and compress multiple directories?**
+
+```bash
+tar -czf backup.tar.gz /dir1 /dir2 /dir3
+```
+
+---
+
+## **31. How to check if a user exists?**
+
+```bash
+id -u username &>/dev/null && echo "User exists" || echo "User does not exist"
+```
+
+---
+
+## **32. How to monitor a log file in real-time?**
+
+```bash
+tail -f /var/log/nginx/error.log
+```
+
+---
+
+## **33. How to check last modified time of files?**
+
+```bash
+ls -lt /var/log
+```
+
+---
+
+## **34. How to copy files with progress display?**
+
+```bash
+rsync -ah --progress /source/ /destination/
+```
+
+---
+
+## **35. How to extract files from tar.gz archive?**
+
+```bash
+tar -xzf archive.tar.gz
+```
+
+---
+
+## **36. How to get system hostname and IP?**
+
+```bash
+hostname
+hostname -I
+```
+
+---
+
+## **37. How to get top 5 CPU or memory consuming processes?**
+
+```bash
+ps aux --sort=-%cpu | head -n 6
+ps aux --sort=-%mem | head -n 6
+```
+
+---
+
+## **38. How to change file permissions recursively?**
+
+```bash
+chmod -R 755 /var/www/html
+```
+
+---
+
+## **39. How to find all files modified in last 24 hours?**
+
+```bash
+find /var/log -type f -mtime -1
+```
+
+---
+
+## **40. How to check network connectivity?**
+
+```bash
+ping -c 4 google.com
+```
+
+---
+
+## **41. How to get disk usage of each subdirectory?**
+
+```bash
+du -h --max-depth=1 /var/www/html
+```
+
+---
+
+## **42. How to check listening ports?**
+
+```bash
+ss -tuln
+```
+
+---
+
+## **43. How to create a user and set password via script?**
+
+```bash
+useradd guru
+echo "guru:password" | chpasswd
+```
+
+---
+
+## **44. How to check current logged in users?**
 
 ```bash
 who
 ```
 
-**50. Find large files (>100MB)**
+---
+
+## **45. How to find all executable files in a directory?**
 
 ```bash
-find / -type f -size +100M
-```
-
+find /usr/bin -type f -executable
 ```
 
 ---
 
-If you want, I can **also make a Git-ready version with a table of contents** at the top so it looks professional on your GitHub README style.  
+## **46. How to extract last N lines from a log file?**
 
-Do you want me to do that?
+```bash
+tail -n 20 /var/log/syslog
+```
+
+---
+
+## **47. How to count occurrences of a word in a file?**
+
+```bash
+grep -o "error" /var/log/nginx/error.log | wc -l
+```
+
+---
+
+## **48. How to create a symbolic link?**
+
+```bash
+ln -s /var/www/html /home/user/html_link
+```
+
+---
+
+## **49. How to schedule a backup using cron?**
+
+```bash
+0 2 * * * /home/user/backup.sh
+```
+
+---
+
+## **50. How to monitor CPU, memory, and disk usage together?**
+
+```bash
+top
+vmstat 1
+iostat -xz 1
 ```
